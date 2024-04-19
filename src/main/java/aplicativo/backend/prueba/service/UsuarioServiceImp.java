@@ -80,4 +80,18 @@ public class UsuarioServiceImp  implements UsuarioService{
         }
 	}
 
+	@Override
+	public boolean  eliminarUsuario(Integer idUsuario) {
+		  Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+	        if (optionalUsuario.isPresent()) {
+	            Usuario usuario = optionalUsuario.get();
+	            usuario.setStatus("Eliminado");
+	            usuarioRepository.save(usuario);
+	            return true;
+	        } else {
+	        	return false;
+	        }
+		
+	}
+
 }

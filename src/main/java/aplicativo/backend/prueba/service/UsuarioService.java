@@ -12,5 +12,6 @@ public interface UsuarioService {
 	public List<Usuario> findAll();
 	public Usuario findById(Integer id) throws Exception;
 	public UsuarioResponse save(Usuario usuario) throws Exception;
+	public boolean  eliminarUsuario(Integer idUsuario);
 
 }
