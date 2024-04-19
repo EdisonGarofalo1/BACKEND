@@ -38,13 +38,6 @@ public class Rol  implements Serializable {
 	 @JsonIgnoreProperties({"rol"})
 	private List<RolOpciones> rolOpciones;
 	
-	/*
-	
-	 @ManyToMany(fetch = FetchType.EAGER)
-		@JoinTable(name = "rol_usuarios", 
-		joinColumns = @JoinColumn(name = "ROL_idRol",referencedColumnName = "idRol"), 
-		inverseJoinColumns = @JoinColumn(name = "usuario_idUsuario", referencedColumnName = "idUsuario"))
-	 */
 	
 	 @JsonIgnore
 	   @ManyToMany(mappedBy = "roles")

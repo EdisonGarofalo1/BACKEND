@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -29,7 +31,7 @@ public class Persona  implements Serializable {
 
     @Column(name = "FechaNacimiento")
     private Date fechaNacimiento;
-    
+
     @OneToMany(mappedBy = "persona")
     private List<Usuario> usuarios;
 

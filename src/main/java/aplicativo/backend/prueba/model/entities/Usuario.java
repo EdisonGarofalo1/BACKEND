@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -45,7 +45,7 @@ public class Usuario implements Serializable{
 
 		 
 		    @ManyToOne
-		  //  @JsonIgnore
+		  
 		    @JoinColumn(name = "Persona_idPersona2")
 		    @JsonIgnoreProperties({"usuarios"})
 		    private Persona persona;
@@ -70,11 +70,12 @@ public class Usuario implements Serializable{
 			@JoinTable(name = "rol_usuarios", 
 			joinColumns = @JoinColumn(name = "usuario_idUsuario", referencedColumnName = "idUsuario"), 
 			inverseJoinColumns = @JoinColumn(name = "ROL_idRol",referencedColumnName = "idRol"))
-			private List<Rol> roles;
+		    @JsonIgnoreProperties("rolOpciones")
+		    private List<Rol> roles;
 		    
 		    
 		    
-
+		    @JsonIgnore
 		    @OneToMany(mappedBy = "usuario")
 		    private List<Sesion> sesiones;
 

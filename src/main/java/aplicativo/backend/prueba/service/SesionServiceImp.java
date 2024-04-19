@@ -1,8 +1,7 @@
 package aplicativo.backend.prueba.service;
 
 import java.sql.Date;
-import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,17 +21,7 @@ public class SesionServiceImp implements  SesionService{
 	
 	@Autowired
 	   private UsuarioRepository   usuarioRepository;
-	@Override
-	public List<Sesion> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Sesion findById(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public UsuarioResponse login(Usuario usuario) throws Exception {
@@ -101,16 +90,7 @@ public class SesionServiceImp implements  SesionService{
 			 UsuarioResponse  response = new UsuarioResponse();
 			 if (usuarioDb != null) {
 				 usuarioDb.setSessionActive("E");
-				 /*
-		 Optional<Sesion> sesionAbierta = sesionRepository.findFirstByUsuarioAndFechaCierre(usuario.getIdUsuario());
-	        sesionAbierta.ifPresent(sesion -> {
-	            sesion.setFechaCierre( new Date(System.currentTimeMillis()));
-	            
-	          
-	            sesionRepository.save(sesion);
-	        });
-	        
-	        */
+		
 				 Sesion sesionAbierta = sesionRepository.findFirstByUsuarioAndFechaCierre(usuario.getIdUsuario());
 				 if (sesionAbierta != null) {
 					 sesionAbierta.setFechaCierre( new Date(System.currentTimeMillis()));
@@ -123,7 +103,7 @@ public class SesionServiceImp implements  SesionService{
             usuarioRepository.save(usuarioDb);
 			 }
 			 
-			 //response.setUsuario(usuarioDb);
+		
 			 response.setMensaje("Sesión cerrada  corretamente.");
 			 
 			
