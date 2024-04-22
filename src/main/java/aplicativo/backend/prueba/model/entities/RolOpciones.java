@@ -24,9 +24,9 @@ public class RolOpciones implements Serializable {
 	    @Column(name = "NombreOpcion" , length = 50)
 	    private String nombreOpcion;
 
-	    
-
-		@ManyToMany(fetch = FetchType.EAGER)
+	  //  @ManyToOne(fetch = FetchType.LAZY)
+	   // EAGER
+		@ManyToMany(fetch = FetchType.LAZY)
 		 @JsonIgnore
 		@JoinTable(name = "rol_rolOpciones", 
 		joinColumns = @JoinColumn(name = "RolOpciones_idOpcion", referencedColumnName = "idOpcion"), 
@@ -57,6 +57,13 @@ public class RolOpciones implements Serializable {
 		public void setRoles(List<Rol> roles) {
 			this.roles = roles;
 		}
+
+		@Override
+		public String toString() {
+			return "RolOpciones [idOpcion=" + idOpcion + ", nombreOpcion=" + nombreOpcion + "]";
+		}
+		
+		
 
 	    
 }

@@ -1,6 +1,9 @@
 package aplicativo.backend.prueba.util;
 
+
 import java.util.Locale;
+
+
 
 import aplicativo.backend.prueba.repository.UsuarioRepository;
 
@@ -38,19 +41,12 @@ public class GenerarCorreo {
 	        
 	        return correo;
 	    }
-/*
 	  
-	  public static String generarMailUnico1(String mail) {
-	    
-	        int numero = 1;
-	        String mailUnico = mail;
-	        while (usuarioRepository.existsByMail(mailUnico)) {
-	            mailUnico = mail.substring(0, mail.indexOf('@')) + numero + mail.substring(mail.indexOf('@'));
-	            numero++;
-	        }
-	        return mailUnico;
-	    }
-*/
+	
 
+
+	  
+	
+	  
 
 }

@@ -3,8 +3,11 @@ package aplicativo.backend.prueba.service;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import aplicativo.backend.prueba.model.entities.Persona;
 import aplicativo.backend.prueba.model.entities.Usuario;
@@ -12,6 +15,7 @@ import aplicativo.backend.prueba.repository.PersonaRepository;
 import aplicativo.backend.prueba.repository.UsuarioRepository;
 import aplicativo.backend.prueba.util.GenerarCorreo;
 import aplicativo.backend.prueba.util.UsuarioResponse;
+import aplicativo.backend.prueba.validators.UsuarioValidator;
 @Service
 public class UsuarioServiceImp  implements UsuarioService{
 
@@ -22,6 +26,10 @@ public class UsuarioServiceImp  implements UsuarioService{
 	
 	@Autowired
 	private  PersonaRepository personaRepository;
+	
+	
+	@Autowired
+    private UsuarioValidator usuarioValidator;
 	
 	@Override
 	public List<Usuario> findAll() {
@@ -39,8 +47,15 @@ public class UsuarioServiceImp  implements UsuarioService{
 	
 
 	@Override
-	public UsuarioResponse save(Usuario usuario) throws Exception {
+	public UsuarioResponse save(Usuario usuario,BindingResult result) throws Exception {
 		try {   
+			
+			
+			usuarioValidator.validate(usuario, result);
+			 if (result.hasErrors()) {
+				 return UsuarioResponse.buildBadRequestUsuarioResponse(result.getAllErrors());
+	            }
+			
             Optional<Persona> personaOptional = personaRepository.findById(usuario.getPersona().getIdPersona());
          	UsuarioResponse  response = new UsuarioResponse();
             Usuario usuarioDb = usuarioRepository.findByUsernameOrEmail(usuario.getUserName(),usuario.getMail());
@@ -75,6 +90,10 @@ public class UsuarioServiceImp  implements UsuarioService{
             	 response.setMensaje("Persona no encontrada con ese id:"+ usuario.getPersona().getIdPersona());
                 return response;
             }
+            
+	
+		    
+		
         } catch (Exception e) {
             throw new Exception("Error al intentar registrar Usuario: " + e.getMessage());
         }

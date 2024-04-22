@@ -1,5 +1,9 @@
 package aplicativo.backend.prueba.util;
 
+import java.util.List;
+
+import org.springframework.validation.ObjectError;
+
 import aplicativo.backend.prueba.model.entities.Usuario;
 
 public class UsuarioResponse {
@@ -24,7 +28,15 @@ public class UsuarioResponse {
 		}
 	    
 	    
-	    
+		  public static UsuarioResponse buildBadRequestUsuarioResponse(List<ObjectError> errors) {
+			    StringBuilder errorMessage = new StringBuilder("Errores de validación:");
+			    for (ObjectError error : errors) {
+			        errorMessage.append("\n  - ").append(error.getDefaultMessage());
+			    }
+			    UsuarioResponse response = new UsuarioResponse();
+			    response.setMensaje(errorMessage.toString());
+			    return response;
+			}
 	    
 	    
 }

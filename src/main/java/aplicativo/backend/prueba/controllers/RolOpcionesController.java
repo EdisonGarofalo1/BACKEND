@@ -46,14 +46,12 @@ public class RolOpcionesController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public RolOpciones editar(@RequestBody RolOpciones rolOpciones, @PathVariable Integer id) throws Exception {
 
-		try {
+		
 			RolOpciones Db = rolOpcionesService.findById(id);
 			Db.setNombreOpcion(rolOpciones.getNombreOpcion());
 		
 			return rolOpcionesService.save(Db);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+		
 	}
 
 }

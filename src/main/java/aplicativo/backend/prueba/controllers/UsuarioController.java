@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import aplicativo.backend.prueba.model.entities.Usuario;
 import aplicativo.backend.prueba.service.UsuarioService;
 import aplicativo.backend.prueba.util.UsuarioResponse;
-import aplicativo.backend.prueba.validators.UsuarioValidator;
+
 
 @RestController
 @RequestMapping("/usuario")
@@ -29,8 +29,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	@Autowired
-    private UsuarioValidator usuarioValidator;
+	
 
 	@GetMapping("/listar")
 	public List<Usuario> listar() {
@@ -46,34 +45,14 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> crear( @Validated @RequestBody Usuario usuario ,BindingResult bindingResult) throws Exception {
 	
-		try {
-			
-			usuarioValidator.validate(usuario, bindingResult);
-			 if (bindingResult.hasErrors()) {
-	                return ResponseEntity.badRequest().body("Errores de validación: " + bindingResult.getAllErrors());
-	            }
-			 UsuarioResponse response =usuarioService.save(usuario);
-			
-			
+			 UsuarioResponse response =usuarioService.save(usuario,bindingResult);
 			return ResponseEntity.ok(response);
 			
-		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al intentar registrar usuario: " + e.getMessage());
-			
-		}
 	}
-	
-
 	@PutMapping("/editar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?>  editar(@Validated @RequestBody Usuario usuario, @PathVariable Integer id,BindingResult bindingResult) throws Exception {
-
-		try {
-			usuarioValidator.validate(usuario, bindingResult);
-			 if (bindingResult.hasErrors()) {
-	                return ResponseEntity.badRequest().body("Errores de validación: " + bindingResult.getAllErrors());
-	            }
+	public ResponseEntity<?>  editar(@Validated @RequestBody Usuario usuario, @PathVariable Integer id,BindingResult bindingResult) throws Exception {	
+		
 			
 			Usuario Db = usuarioService.findById(id);
 			
@@ -85,16 +64,13 @@ public class UsuarioController {
 			Db.setRoles(usuario.getRoles());
 		
 			
-			 UsuarioResponse response =usuarioService.save(Db);
+			 UsuarioResponse response =usuarioService.save(Db,bindingResult);
 				
 				
 				return ResponseEntity.ok(response);
 				
 				
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al intentar actualizar usuario: " + e.getMessage());
-		}
+		
 	}
 	
 	

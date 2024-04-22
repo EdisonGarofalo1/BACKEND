@@ -27,15 +27,10 @@ public class SesionController {
 	public UsuarioResponse login(@RequestBody Usuario usuario) throws Exception {
 		
 		
-		try {
+	
             return sesionService.login(usuario);
             
-        } catch (Exception e) {
-           
-            UsuarioResponse response = new UsuarioResponse();
-            response.setMensaje("Error al intentar iniciar sesión: " + e.getMessage());
-            return response;
-        }
+    
 	}
 	
 	
@@ -45,15 +40,10 @@ public class SesionController {
 	public UsuarioResponse logout(@RequestBody Usuario usuario) throws Exception {
 		
 		
-		try {
+	
             return sesionService.logout(usuario);
             
-        } catch (Exception e) {
-           
-            UsuarioResponse response = new UsuarioResponse();
-            response.setMensaje("Error al intentar cerrar sesión: " + e.getMessage());
-            return response;
-        }
+     
 	}
 
 }

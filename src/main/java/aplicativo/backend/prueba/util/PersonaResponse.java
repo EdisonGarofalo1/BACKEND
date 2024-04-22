@@ -1,5 +1,11 @@
 package aplicativo.backend.prueba.util;
 
+
+
+import java.util.List;
+
+import org.springframework.validation.ObjectError;
+
 import aplicativo.backend.prueba.model.entities.Persona;
 
 public class PersonaResponse {
@@ -20,6 +26,17 @@ public class PersonaResponse {
 		this.mensaje = mensaje;
 	}
 	
+	
+	  public static PersonaResponse buildBadRequestResponse(List<ObjectError> errors) {
+		    StringBuilder errorMessage = new StringBuilder("Errores de validación:");
+		    for (ObjectError error : errors) {
+		        errorMessage.append("\n  - ").append(error.getDefaultMessage());
+		    }
+		    PersonaResponse response = new PersonaResponse();
+		    response.setMensaje(errorMessage.toString());
+		    return response;
+		}
+	  
 	 
 	 
 }
