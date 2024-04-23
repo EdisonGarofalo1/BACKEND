@@ -12,8 +12,8 @@ import aplicativo.backend.prueba.model.entities.Rol;
 public interface RolRepository extends  JpaRepository< Rol, Integer> {
 	
 	   @Query(value = "CALL sp_rolfindAll()", nativeQuery = true)
-	 // List<Rol> rolfindAll();
-	   List<Object[]> rolfindAll();
+	  List<Rol> rolfindAll();
+	  // List<Object[]> rolfindAll();
 	   
  
 
