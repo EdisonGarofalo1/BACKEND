@@ -110,12 +110,9 @@ public class RolServiceImpSP2 implements RolServiceSP2 {
 	        	  String opcionesJson = ConvertirListaAJson.convertir(rol.getRolOpciones());
 	           jdbcTemplate.update("CALL sp_rol_save(?, ?, ?)", rol.getIdRol(),rol.getRolName(),opcionesJson);
 	     
-	           if(rol.getIdRol() > 0) {
-	        	   return "El rol se Actualizo correctamente.";
-	           }
-	           else {
-	             return "El rol se guardó correctamente.";
-	           }
+	        
+	             return " se realizo operacion correctamente.";
+	      
 	      
 	         
 	        } catch (Exception e) {

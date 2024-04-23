@@ -23,16 +23,10 @@ public class RolServiceImpSP1 implements RolServiceSP1  {
 	
 	@Override
 	public List<Rol> findAll() {
-		
-		
-	    Set<Rol> rolesSet = new HashSet<>(rolRepository.findAll());
-        return List.copyOf(rolesSet);
-	   
-	      
-	      
+	    Set<Rol> rolesSet = new HashSet<>(rolRepository.rolfindAll());
+        return List.copyOf(rolesSet); 
 	    }
 	
-
 	@Override
 	public Rol findById(Integer id) throws Exception {
 		try {
