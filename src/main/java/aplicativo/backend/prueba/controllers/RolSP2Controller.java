@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,4 +39,16 @@ public class RolSP2Controller {
 		return RolServiceSP2.save(rol);
 	}
 	
+	
+	@PutMapping("/editar/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String editar(@RequestBody Rol rol, @PathVariable Integer id) throws Exception {
+
+	
+			Rol rolDb = RolServiceSP2.findById(id);
+			rolDb.setRolName(rol.getRolName());
+			rolDb.setRolOpciones(rol.getRolOpciones());
+		
+			return RolServiceSP2.save(rolDb);
+	}
 }

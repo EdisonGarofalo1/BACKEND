@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rolfindAll`()
+BEGIN
+
+   
+       SELECT DISTINCT r.id_rol, r.rol_name, rop.id_opcion, rop.nombre_opcion 
+    FROM rol r 
+    INNER JOIN rol_rol_opciones op ON r.id_rol = op.rol_id_rol 
+    INNER JOIN rol_opciones rop ON rop.id_opcion = op.rol_opciones_id_opcion
+    order by r.id_rol, r.rol_name, rop.id_opcion, rop.nombre_opcion ASC;
+END

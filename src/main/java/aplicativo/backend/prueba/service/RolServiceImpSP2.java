@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import aplicativo.backend.prueba.model.entities.Rol;
 import aplicativo.backend.prueba.model.entities.RolOpciones;
+import aplicativo.backend.prueba.util.ConvertirListaAJson;
 @Service
 public class RolServiceImpSP2 implements RolServiceSP2 {
 	
@@ -103,65 +104,26 @@ public class RolServiceImpSP2 implements RolServiceSP2 {
 
 	@Override
 	public String save(Rol rol) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-/*
-
-	@Override
-	public String save(Rol rol) throws Exception {
-	    try {
-	        String sql = "CALL sp_rol_save(?, ?)"; // Nombre del procedimiento almacenado para guardar un rol
-	        jdbcTemplate.update(sql, rol.getIdRol(), rol.getRolName());
-	        String mensaje = jdbcTemplate.queryForObject(sql, String.class, rol.getIdRol(), rol.getRolName(), rol.getRolOpciones());
-
-	        // Si necesitas guardar las opciones asociadas al rol, puedes hacerlo aquí
-	        //saveRolOpciones(rol);
-	        
-	        return mensaje;
-	    } catch (Exception e) {
-	        throw new Exception("Error al guardar el rol: " + e.getMessage());
-	    }
-	}
-	
-	*/
-	/*
-	@Override	
-	 public String save(Rol rol) throws Exception {
-	        try {
-	            StoredProcedureQuery storedProcedure = entityManager.createNamedStoredProcedureQuery("sp_rol_save");
-	            storedProcedure.setParameter("p_id_rol", rol.getIdRol());
-	            storedProcedure.setParameter("p_rol_name", rol.getRolName());
-	            // Convertir opciones a String si es necesario y pasar como parámetro
-	            storedProcedure.setParameter("p_opcionesList", convertirOpcionesAString( rol.getRolOpciones()));
-
-	            // Ejecutar el procedimiento almacenado
-	            storedProcedure.execute();
-
-	            // Obtener el mensaje de retorno del procedimiento almacenado
-	            String mensaje = (String) storedProcedure.getOutputParameterValue("p_mensaje");
-
-	            return mensaje;
-	        } catch (Exception e) {
-	            throw new Exception("Error al guardar el rol: " + e.getMessage());
-	        }
-	    }
-
-	private String convertirOpcionesAString(List<RolOpciones> opciones) {
 		
-	    StringBuilder sb = new StringBuilder();
-	    for (RolOpciones opcion : opciones) {
-	        sb.append(opcion.getIdOpcion()).append(",");
-	    }
-	    if (sb.length() > 0) {
-	        sb.deleteCharAt(sb.length() - 1); // Eliminar la última coma
-	    }
-	    return sb.toString();
-	
+		
+	        try {
+	        	  String opcionesJson = ConvertirListaAJson.convertir(rol.getRolOpciones());
+	           jdbcTemplate.update("CALL sp_rol_save(?, ?, ?)", rol.getIdRol(),rol.getRolName(),opcionesJson);
+	     
+	           if(rol.getIdRol() > 0) {
+	        	   return "El rol se Actualizo correctamente.";
+	           }
+	           else {
+	             return "El rol se guardó correctamente.";
+	           }
+	      
+	         
+	        } catch (Exception e) {
+	        	 return "Error al guardar el rol con opciones: " + e.getMessage();
+	        }
+	       
 	}
 
-	
-	*/
+
+
 }

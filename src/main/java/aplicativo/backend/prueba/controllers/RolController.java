@@ -22,6 +22,8 @@ public class RolController {
 		return rolService.findAll();
 	}
 
+	
+	
 	@GetMapping("/ver/{id}")
 	public Rol detalle(@PathVariable Integer id) throws Exception {
 		return rolService.findById(id);
@@ -38,15 +40,13 @@ public class RolController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Rol editar(@RequestBody Rol rol, @PathVariable Integer id) throws Exception {
 
-		try {
+	
 			Rol rolDb = rolService.findById(id);
 			rolDb.setRolName(rol.getRolName());
 			rolDb.setRolOpciones(rol.getRolOpciones());
 		
 			return rolService.save(rolDb);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+		
 	}
 
 }

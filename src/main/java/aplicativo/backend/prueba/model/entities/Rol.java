@@ -29,7 +29,7 @@ public class Rol  implements Serializable {
     @Column(name = "RolName", length = 50)
     private String rolName;
     
-
+/*
 	@ManyToMany(fetch = FetchType.EAGER)
 	
 	@JoinTable(name = "rol_rolOpciones", 
@@ -37,6 +37,15 @@ public class Rol  implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "RolOpciones_idOpcion", referencedColumnName = "idOpcion"))
 	 @JsonIgnoreProperties({"rol"})
 	private List<RolOpciones> rolOpciones;
+	*/
+	  @ManyToMany(fetch = FetchType.LAZY)
+	    @JoinTable(
+	        name = "rol_rolOpciones", 
+	        joinColumns = @JoinColumn(name = "Rol_idRol"), 
+	        inverseJoinColumns = @JoinColumn(name = "RolOpciones_idOpcion")
+	    )
+	  @JsonIgnoreProperties({"rol"})
+	    private List<RolOpciones> rolOpciones;
 	
 	
 	 @JsonIgnore
@@ -49,34 +58,49 @@ public class Rol  implements Serializable {
 		return rolOpciones;
 	}
 
-	public void setRolOpciones(List<RolOpciones> rolOpciones) {
-		this.rolOpciones = rolOpciones;
-	}
-	 
+
 
 	public Integer getIdRol() {
 		return idRol;
 	}
 
+
+
 	public void setIdRol(Integer idRol) {
 		this.idRol = idRol;
 	}
+
+
 
 	public String getRolName() {
 		return rolName;
 	}
 
+
+
 	public void setRolName(String rolName) {
 		this.rolName = rolName;
 	}
+
+
 
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
+
+
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+
+
+
+	public void setRolOpciones(List<RolOpciones> rolOpciones) {
+		this.rolOpciones = rolOpciones;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -84,6 +108,14 @@ public class Rol  implements Serializable {
 				+ usuarios + "]";
 	}
 
+
+
+	
+
+
+	
+
+	
 	
 
 

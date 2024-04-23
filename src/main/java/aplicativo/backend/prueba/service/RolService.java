@@ -8,6 +8,8 @@ public interface RolService {
 	public List<Rol> findAll();
 	public Rol findById(Integer id) throws Exception;
 	public Rol save(Rol rol) throws Exception;
-
+	
+	
+	
 
 }

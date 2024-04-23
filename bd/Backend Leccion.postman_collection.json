@@ -191,7 +191,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\r\n\t\"rolName\":\"Administrador\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4},\r\n{\r\n\"idOpcion\":5}\r\n\r\n]\r\n\t\r\n}",
+							"raw": "{\t\r\n\t\"rolName\":\"Administrador 2\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3}\r\n\r\n]\r\n\t\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -199,7 +199,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8182/rol/editar/1",
+							"raw": "http://localhost:8182/rol/editar/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -208,7 +208,217 @@
 							"path": [
 								"rol",
 								"editar",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rol SP1",
+			"item": [
+				{
+					"name": "listarId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8182/rolsp1/ver/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp1",
+								"ver",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8182/rolsp1/listar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp1",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\r\n\t\"rolName\":\"Administrador100\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8182/rolsp1/crear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp1",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\r\n\t\"rolName\":\"Super Usuario x 100\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8182/rolsp1/editar/67",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp1",
+								"editar",
+								"67"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rol SP2",
+			"item": [
+				{
+					"name": "listarId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8182/rolsp2/ver/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp2",
+								"ver",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8182/rolsp2/listar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp2",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\r\n\t\"rolName\":\"ROL EDISON G\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8182/rolsp2/crear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp2",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\r\n\t\"rolName\":\"ROL EDISON G\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4},{\r\n\"idOpcion\":5}\r\n\r\n]\r\n\t\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8182/rolsp2/editar/70",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"rolsp2",
+								"editar",
+								"70"
 							]
 						}
 					},
@@ -313,6 +523,35 @@
 							"path": [
 								"usuario",
 								"editar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8182/usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8182",
+							"path": [
+								"usuario",
 								"1"
 							]
 						}

@@ -26,14 +26,18 @@ public class RolOpciones implements Serializable {
 
 	  //  @ManyToOne(fetch = FetchType.LAZY)
 	   // EAGER
+	    /*
 		@ManyToMany(fetch = FetchType.LAZY)
 		 @JsonIgnore
 		@JoinTable(name = "rol_rolOpciones", 
 		joinColumns = @JoinColumn(name = "RolOpciones_idOpcion", referencedColumnName = "idOpcion"), 
 		inverseJoinColumns = @JoinColumn(name = "Rol_idRol",referencedColumnName = "idRol"))
 	    private List<Rol> roles;
-	   
-		
+		*/
+	    @JsonIgnore
+		 @ManyToMany(mappedBy = "rolOpciones")
+		    private List<Rol> roles;
+
 		public Integer getIdOpcion() {
 			return idOpcion;
 		}
@@ -60,8 +64,10 @@ public class RolOpciones implements Serializable {
 
 		@Override
 		public String toString() {
-			return "RolOpciones [idOpcion=" + idOpcion + ", nombreOpcion=" + nombreOpcion + "]";
+			return "RolOpciones [idOpcion=" + idOpcion + ", nombreOpcion=" + nombreOpcion + ", roles=" + roles + "]";
 		}
+	   
+	
 		
 		
 
