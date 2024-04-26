@@ -10,7 +10,9 @@ import aplicativo.backend.prueba.model.entities.Sesion;
 import aplicativo.backend.prueba.model.entities.Usuario;
 import aplicativo.backend.prueba.repository.SesionRepository;
 import aplicativo.backend.prueba.repository.UsuarioRepository;
-import aplicativo.backend.prueba.util.UsuarioResponse;
+import aplicativo.backend.prueba.response.ResponseData;
+import aplicativo.backend.prueba.util.MessageUtil;
+
 
 @Service
 public class SesionServiceImp implements  SesionService{
@@ -24,17 +26,21 @@ public class SesionServiceImp implements  SesionService{
 	
 
 	@Override
-	public UsuarioResponse login(Usuario usuario) throws Exception {
+	public ResponseData login(Usuario usuario)  {
 		
+		ResponseData response = new ResponseData();
 		try {
 			 Usuario usuarioDb = usuarioRepository.findByUsernameOrEmail(usuario.getUserName(),usuario.getMail());
-			 UsuarioResponse  response = new UsuarioResponse();
+
+                 if(usuarioDb != null ) {
 			 
-			 if (usuarioDb != null && usuarioDb.getPassword().equals(usuario.getPassword())) {
+			 
+			 if ( usuarioDb.getPassword().equals(usuario.getPassword())) {
 		        	
 				 if(usuarioDb.getStatus() != null && usuarioDb.getStatus().trim().equalsIgnoreCase("Bloqueado")) {
-					 response.setMensaje("El usuario está bloqueado. Contacte al administrador.");
-					 return response; 
+					 response.setMessage("El usuario está bloqueado. Contacte al administrador.");;
+					 
+					 return response;
 					 
 				 } else {
 				 
@@ -42,9 +48,9 @@ public class SesionServiceImp implements  SesionService{
 				 boolean existeSecionActiva = usuarioRepository.findByUsuarioIdAndActivaTrue(usuarioDb.getIdUsuario());
 	        	
 				 if(existeSecionActiva) {
-					 response.setMensaje("Ya existe una sesión activa para este usuario");
-					 
+					 response.setMessage("Ya existe una sesión activa para este usuario");
 					 return response;
+				
 				 }
 				 usuarioDb.setSessionActive("A");
 				 
@@ -53,45 +59,58 @@ public class SesionServiceImp implements  SesionService{
 	             sesion.setUsuario(usuarioDb);
 	           
 	             sesion.setFechaIngreso(new Date(System.currentTimeMillis()));
-	            // usuarioRepository.save(usuarioDb);
+	           
 	             sesionRepository.save(sesion);
+	   
+	             response.setMessage("Se logio con exito");
+	             response.setCode("90283989n398293893282393829328329");
+	             return response;
 	            
-	             //response.setUsuario(usuarioDb);
-	             response.setMensaje("Se logio con exito");
-	             return response; 
 				 }
 	        }else {
 	        	
 	        	 int intentosFallidos = usuarioDb != null ? usuarioDb.getIntentosFallidos() + 1 : 1;
 	             if (intentosFallidos >= 3) {
 	                 usuarioDb.setStatus("Bloqueado");
-	                 response.setMensaje("El usuario ha sido bloqueado después de tres intentos fallidos.");
-	                 return response; 
+	                 response.setMessage("El usuario ha sido bloqueado después de tres intentos fallidos.");
+	             
+	               
 	             } else {
 	                 usuarioDb.setIntentosFallidos(intentosFallidos);
-	                 response.setMensaje("Credenciales de inicio de sesión incorrectas. Intento " + intentosFallidos + "/3");
+	                 response.setMessage("Credenciales de inicio de sesión incorrectas. Intento " + intentosFallidos + "/3");
+	                 
 	             }
 	             usuarioRepository.save(usuarioDb);
+	            
+	             return response;
 	           
-	        }
+	        }}else {
 			  
-			 response.setMensaje("Credenciales de inicio de sesión incorrectas.");
-			   return response; 
+			 response.setMessage("Credenciales de inicio de sesión incorrectas.");
+			 return response;
+	        	
+	        }
+			
 			
 		} catch (Exception e) {
-	        throw new Exception("Error al intentar iniciar sesión: " + e.getMessage());
+	     
+			response.setCode(MessageUtil.INTERNALERROR.name());
+			response.setMessage(MessageUtil.INTERNALERROR.getKey() + e.getMessage());
 		}
+		
+	     return response;
 	}
 
 	@Override
-	public UsuarioResponse logout(Usuario usuario) throws Exception {
+	public ResponseData logout(Usuario usuario)  {
+		ResponseData response = new ResponseData();
 		try {
-			 Usuario usuarioDb = usuarioRepository.findById(usuario.getIdUsuario()).orElse(null);
-			 UsuarioResponse  response = new UsuarioResponse();
+			 Usuario usuarioDb = usuarioRepository.findByUsernameOrEmail(usuario.getUserName(),usuario.getMail());
+		
 			 if (usuarioDb != null) {
 				 usuarioDb.setSessionActive("E");
 		
-				 Sesion sesionAbierta = sesionRepository.findFirstByUsuarioAndFechaCierre(usuario.getIdUsuario());
+				 Sesion sesionAbierta = sesionRepository.findFirstByUsuarioAndFechaCierre(usuarioDb.getIdUsuario());
 				 if (sesionAbierta != null) {
 					 sesionAbierta.setFechaCierre( new Date(System.currentTimeMillis()));
 					 sesionRepository.save(sesionAbierta);
@@ -104,15 +123,16 @@ public class SesionServiceImp implements  SesionService{
 			 }
 			 
 		
-			 response.setMensaje("Sesión cerrada  corretamente.");
+			 response.setMessage("Sesión cerrada  corretamente.");
 			 
 			
-	        return response;
+	   
 	        
 		} catch (Exception e) {
-			 throw new Exception("Error al cerrar sesión: " + e.getMessage());
+			response.setCode(MessageUtil.INTERNALERROR.name());
+			response.setMessage(MessageUtil.INTERNALERROR.getKey() + e.getMessage());
 		}
-			
+	     return response;
 		
 	}
 

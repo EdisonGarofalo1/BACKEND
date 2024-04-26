@@ -1,13 +1,13 @@
 package aplicativo.backend.prueba.service;
 
-import java.util.List;
 
 import aplicativo.backend.prueba.model.entities.RolOpciones;
+import aplicativo.backend.prueba.response.ResponseData;
 
 public interface RolOpcionesService {
 
 	
-	public List<RolOpciones> findAll();
-	public RolOpciones findById(Integer id) throws Exception;
-	public RolOpciones save(RolOpciones rolOpciones) throws Exception;
+	public ResponseData findAll();
+	public ResponseData findById(Integer id);
+	public ResponseData save(RolOpciones rolOpciones, Integer id) ;
 }

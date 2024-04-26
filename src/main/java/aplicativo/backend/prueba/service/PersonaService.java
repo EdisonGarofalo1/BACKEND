@@ -1,19 +1,19 @@
 package aplicativo.backend.prueba.service;
 
-import java.util.List;
 
-import org.springframework.validation.BindingResult;
 
 import aplicativo.backend.prueba.model.entities.Persona;
-import aplicativo.backend.prueba.util.PersonaResponse;
+import aplicativo.backend.prueba.response.ResponseData;
+
 
 
 
 public interface PersonaService {
 	
 	
-	public List<Persona> findAll();
-	public Persona findById(Integer id) throws Exception;
-	public PersonaResponse save(Persona persona, BindingResult result ) throws Exception;
-
+	public ResponseData findAll();
+	public ResponseData findById(Integer id);
+	public ResponseData save(Persona persona ,Integer id);
+	
 }
+

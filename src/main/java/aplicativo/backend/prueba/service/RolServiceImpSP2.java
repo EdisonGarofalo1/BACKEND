@@ -1,30 +1,26 @@
 package aplicativo.backend.prueba.service;
 
-import java.sql.CallableStatement;
-import java.sql.Types;
+
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.StoredProcedureQuery;
-import javax.swing.tree.RowMapper;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlOutParameter;
-import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
 import org.springframework.stereotype.Service;
 
 import aplicativo.backend.prueba.model.entities.Rol;
 import aplicativo.backend.prueba.model.entities.RolOpciones;
+import aplicativo.backend.prueba.repository.RolRepository;
+import aplicativo.backend.prueba.response.ResponseData;
 import aplicativo.backend.prueba.util.ConvertirListaAJson;
+import aplicativo.backend.prueba.util.MessageUtil;
 @Service
 public class RolServiceImpSP2 implements RolServiceSP2 {
 	
@@ -35,7 +31,8 @@ public class RolServiceImpSP2 implements RolServiceSP2 {
 	        this.jdbcTemplate = jdbcTemplate;
 	    }
 	    
-
+	    @Autowired
+		private RolRepository rolRepository;
 	    
 	    
 	    @Override
@@ -75,7 +72,7 @@ public class RolServiceImpSP2 implements RolServiceSP2 {
 	    
 
 	@Override
-	public Rol findById(Integer id) throws Exception {
+	public Rol findById(Integer id)  throws Exception  {
 	    try {
 	        String sql = "CALL sp_rolfindById(?)"; // Nombre del procedimiento almacenado y sus parámetros
 	        return jdbcTemplate.query(sql, new Object[]{id}, rs -> {
@@ -103,22 +100,58 @@ public class RolServiceImpSP2 implements RolServiceSP2 {
 
 
 	@Override
-	public String save(Rol rol) throws Exception {
+	public ResponseData save(Rol rol, Integer id)  {
 		
 		
-	        try {
+	       
 	        	  String opcionesJson = ConvertirListaAJson.convertir(rol.getRolOpciones());
-	           jdbcTemplate.update("CALL sp_rol_save(?, ?, ?)", rol.getIdRol(),rol.getRolName(),opcionesJson);
+	        
+	           
+	           
+	     		 
+	   			ResponseData response = new ResponseData();
+	   			try {
+	   				
+	   				
+	   				
+	   				if (id != null) {
+	   					
+	   					Rol rolreponse = rolRepository.findById(id).orElse(null);
+	   					
+	   					if (rolreponse != null) {
+
+	   					
+	   						
+	   					   jdbcTemplate.update("CALL sp_rol_save(?, ?, ?)", id,rol.getRolName(),opcionesJson);
+	   						response.setCode(MessageUtil.UPDATED.name());
+	   						response.setMessage(MessageUtil.UPDATED.getKey());
+
+	   					} else {
+	   						response.setCode(MessageUtil.NOTFOUND.name());
+	   						response.setMessage(MessageUtil.NOTFOUND.getKey());
+	   					}
+	   					
+	   				}else {
+	   					
+	   				
+	   					
+	   				   jdbcTemplate.update("CALL sp_rol_save(?, ?, ?)", id,rol.getRolName(),opcionesJson);
+	   					response.setCode(MessageUtil.CREATED.name());
+	   					response.setMessage(MessageUtil.CREATED.getKey());
+	   				}
+	   			} catch (Exception e) {
+	   				response.setCode(MessageUtil.INTERNALERROR.name());
+	   				response.setMessage(MessageUtil.INTERNALERROR.getKey() + e.getMessage());
+
+	   			}
+
+	   			return response;
+			
+			
+	           
+	           
 	     
 	        
-	             return " se realizo operacion correctamente.";
-	      
-	      
-	         
-	        } catch (Exception e) {
-	        	 return "Error al guardar el rol con opciones: " + e.getMessage();
-	        }
-	       
 	}
 
 

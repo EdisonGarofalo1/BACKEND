@@ -1,5 +1,0 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rolfindById`(in p_id_rol int)
-BEGIN
-select r.id_rol,r.rol_name,rop.id_opcion,rop.nombre_opcion from rol r inner join rol_rol_opciones op on  r.id_rol=op.rol_id_rol inner join 
-   rol_opciones rop on rop.id_opcion= op.rol_opciones_id_opcion where r.id_rol=p_id_rol;
-END

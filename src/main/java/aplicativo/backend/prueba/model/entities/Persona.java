@@ -6,12 +6,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
-
-
-
 @Entity
 @Table(name = "persona")
+
 public class Persona  implements Serializable {
 
 	private static final long serialVersionUID = -8054179494626769254L;

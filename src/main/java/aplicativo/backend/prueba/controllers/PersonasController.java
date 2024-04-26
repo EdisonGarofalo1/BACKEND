@@ -1,22 +1,17 @@
 package aplicativo.backend.prueba.controllers;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 
+import org.springframework.validation.annotation.Validated;
 import aplicativo.backend.prueba.model.entities.Persona;
+import aplicativo.backend.prueba.response.ResponseData;
 import aplicativo.backend.prueba.service.PersonaService;
-import aplicativo.backend.prueba.util.PersonaResponse;
 
 
 
 @RestController
-@RequestMapping("/persona")
+@RequestMapping("api/persona")
 public class PersonasController {
 	
 	
@@ -26,41 +21,34 @@ public class PersonasController {
 	
 	
 	@GetMapping("/listar")
-	public List<Persona> listar() {
+	public ResponseData listar() {
 		return personaService.findAll();
 	}
 
+
+	
 	@GetMapping("/ver/{id}")
-	public Persona detalle(@PathVariable Integer id) throws Exception {
+	public ResponseData detalle(@PathVariable Integer id)  {
 		return personaService.findById(id);
 	}
 
 	@PostMapping("/crear")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> crear(@Validated @RequestBody Persona persona  ,BindingResult bindingResult) throws Exception {
+	public ResponseData crear(@Validated @RequestBody Persona persona )  {
 		
 			 
-			PersonaResponse response = personaService.save(persona, bindingResult);
-		return ResponseEntity.ok(response);
+		ResponseData response = personaService.save(persona, null);
+		return response;
 		
 	}
 	
 
 	@PutMapping("/editar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?>  editar(@Validated @RequestBody Persona persona, @PathVariable Integer id,BindingResult bindingResult) throws Exception {
-
-		   
-			Persona Db = personaService.findById(id);
-			Db.setNombres(persona.getNombres());
-			Db.setApellidos(persona.getApellidos());
-			Db.setFechaNacimiento(persona.getFechaNacimiento());
-			Db.setIdentificacion(persona.getIdentificacion());
-			PersonaResponse response = personaService.save(Db,bindingResult);
-			return ResponseEntity.ok(response);
-		
+	public ResponseData editar(@Validated @RequestBody Persona persona, @PathVariable Integer id)  {
+			ResponseData response = personaService.save(persona,id);
+			return response;
 			
-	
 	}
 
 }

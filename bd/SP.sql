@@ -1,3 +1,26 @@
+
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rolfindAll`()
+BEGIN
+
+   
+       SELECT DISTINCT r.id_rol, r.rol_name, rop.id_opcion, rop.nombre_opcion 
+    FROM rol r 
+    INNER JOIN rol_rol_opciones op ON r.id_rol = op.rol_id_rol 
+    INNER JOIN rol_opciones rop ON rop.id_opcion = op.rol_opciones_id_opcion
+    order by r.id_rol, r.rol_name, rop.id_opcion, rop.nombre_opcion ASC;
+END ;;
+DELIMITER ;
+ 
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rolfindById`(in p_id_rol int)
+BEGIN
+select r.id_rol,r.rol_name,rop.id_opcion,rop.nombre_opcion from rol r inner join rol_rol_opciones op on  r.id_rol=op.rol_id_rol inner join 
+   rol_opciones rop on rop.id_opcion= op.rol_opciones_id_opcion where r.id_rol=p_id_rol;
+
+END ;;
+           
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rol_save`(
 IN p_id_rol int , p_rolName VARCHAR(50),
     IN p_opcionesList JSON)
@@ -82,4 +105,7 @@ DECLARE done INT DEFAULT FALSE;
  
  
  select  J_mensaje;
-END
+
+END ;;
+DELIMITER ;
+

@@ -1,13 +1,13 @@
 package aplicativo.backend.prueba.service;
 
-import java.util.List;
 import aplicativo.backend.prueba.model.entities.Rol;
+import aplicativo.backend.prueba.response.ResponseData;
 
 public interface RolService {
 	
-	public List<Rol> findAll();
-	public Rol findById(Integer id) throws Exception;
-	public Rol save(Rol rol) throws Exception;
+	public ResponseData findAll();
+	public ResponseData findById(Integer id) ;
+	public ResponseData save(Rol rol, Integer id) ;
 	
 	
 	

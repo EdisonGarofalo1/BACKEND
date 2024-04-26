@@ -14,16 +14,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import aplicativo.backend.prueba.model.entities.Rol;
+import aplicativo.backend.prueba.response.ResponseData;
 import  aplicativo.backend.prueba.service.RolServiceSP2;
 
 @RestController
-@RequestMapping("/rolsp2")
+@RequestMapping("api/rolsp2")
 public class RolSP2Controller {
 	
 	@Autowired
 	private RolServiceSP2 RolServiceSP2;
 	@GetMapping("/listar")
-	public List<Rol> listar() throws Exception{
+	public List<Rol>  listar() throws Exception{
 		return RolServiceSP2.findAll();
 	}
 
@@ -35,20 +36,17 @@ public class RolSP2Controller {
 	
 	@PostMapping("/crear")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String crear(@RequestBody Rol rol) throws Exception {
-		return RolServiceSP2.save(rol);
+	public ResponseData crear(@RequestBody Rol rol) throws Exception {
+		return RolServiceSP2.save(rol,null);
 	}
 	
 	
 	@PutMapping("/editar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String editar(@RequestBody Rol rol, @PathVariable Integer id) throws Exception {
+	public ResponseData editar(@RequestBody Rol rol, @PathVariable Integer id) throws Exception {
 
 	
-			Rol rolDb = RolServiceSP2.findById(id);
-			rolDb.setRolName(rol.getRolName());
-			rolDb.setRolOpciones(rol.getRolOpciones());
 		
-			return RolServiceSP2.save(rolDb);
+			return RolServiceSP2.save(rol,id);
 	}
 }

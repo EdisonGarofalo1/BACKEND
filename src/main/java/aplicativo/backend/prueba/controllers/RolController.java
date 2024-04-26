@@ -1,16 +1,16 @@
 package aplicativo.backend.prueba.controllers;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import aplicativo.backend.prueba.model.entities.Rol;
+import aplicativo.backend.prueba.response.ResponseData;
 import aplicativo.backend.prueba.service.RolService;
 
 @RestController
-@RequestMapping("/rol")
+@RequestMapping("api/rol")
 public class RolController {
 	
 	@Autowired
@@ -18,34 +18,32 @@ public class RolController {
 	
 
 	@GetMapping("/listar")
-	public List<Rol> listar() {
+	public ResponseData listar() {
 		return rolService.findAll();
 	}
 
 	
 	
 	@GetMapping("/ver/{id}")
-	public Rol detalle(@PathVariable Integer id) throws Exception {
+	public ResponseData detalle(@PathVariable Integer id)  {
 		return rolService.findById(id);
 	}
 
 	@PostMapping("/crear")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Rol crear(@RequestBody Rol rol) throws Exception {
-		return rolService.save(rol);
+	public ResponseData crear(@RequestBody Rol rol)  {
+		return rolService.save(rol, null);
 	}
 	
 
 	@PutMapping("/editar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Rol editar(@RequestBody Rol rol, @PathVariable Integer id) throws Exception {
+	public ResponseData editar(@RequestBody Rol rol, @PathVariable Integer id)  {
 
 	
-			Rol rolDb = rolService.findById(id);
-			rolDb.setRolName(rol.getRolName());
-			rolDb.setRolOpciones(rol.getRolOpciones());
+			
 		
-			return rolService.save(rolDb);
+			return rolService.save(rol, id);
 		
 	}
 

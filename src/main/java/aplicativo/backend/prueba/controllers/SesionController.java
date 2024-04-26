@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import aplicativo.backend.prueba.model.entities.Usuario;
+import aplicativo.backend.prueba.response.ResponseData;
 import aplicativo.backend.prueba.service.SesionService;
-import aplicativo.backend.prueba.util.UsuarioResponse;
+
 
 @RestController
-@RequestMapping("/sesion")
+@RequestMapping("api/sesion")
 public class SesionController {
 	
 	@Autowired
@@ -24,7 +25,7 @@ public class SesionController {
 	
 	@PostMapping("/login")
 	 @ResponseBody
-	public UsuarioResponse login(@RequestBody Usuario usuario) throws Exception {
+	public ResponseData login(@RequestBody Usuario usuario)  {
 		
 		
 	
@@ -37,7 +38,7 @@ public class SesionController {
 	
 	@PostMapping("/logout")
 	 @ResponseBody
-	public UsuarioResponse logout(@RequestBody Usuario usuario) throws Exception {
+	public ResponseData logout(@RequestBody Usuario usuario) {
 		
 		
 	

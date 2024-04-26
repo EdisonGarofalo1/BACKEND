@@ -2,14 +2,15 @@ package aplicativo.backend.prueba.service;
 
 
 import aplicativo.backend.prueba.model.entities.Usuario;
-import aplicativo.backend.prueba.util.UsuarioResponse;
+import aplicativo.backend.prueba.response.ResponseData;
+
 
 public interface SesionService  {
 	
 
-	public UsuarioResponse login(Usuario usuario) throws Exception;
+	public ResponseData login(Usuario usuario) ;
 	
-	public UsuarioResponse logout(Usuario usuario) throws Exception;
+	public ResponseData logout(Usuario usuario) ;
 	
 
 }

@@ -1,19 +1,17 @@
 package aplicativo.backend.prueba.service;
 
-import java.util.List;
-
-import org.springframework.validation.BindingResult;
 
 import aplicativo.backend.prueba.model.entities.Usuario;
-import aplicativo.backend.prueba.util.UsuarioResponse;
+import aplicativo.backend.prueba.response.ResponseData;
+
 
 
 
 public interface UsuarioService {
 	
-	public List<Usuario> findAll();
-	public Usuario findById(Integer id) throws Exception;
-	public UsuarioResponse save(Usuario usuario,BindingResult result) throws Exception;
-	public boolean  eliminarUsuario(Integer idUsuario);
+	public ResponseData findAll();
+	public ResponseData findById(Integer id) ;
+	public ResponseData save(Usuario usuario,Integer id) ;
+	public ResponseData  eliminarUsuario(Integer idUsuario);
 
 }
