@@ -277,7 +277,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\r\n\t\"rolName\":\"Administrador100\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
+							"raw": "{\t\r\n\t\"rolName\":\"Administrador\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,7 +307,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\r\n\t\"rolName\":\"Super Usuario x 100\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
+							"raw": "{\t\r\n\t\"rolName\":\"Super Usuario\",\r\n\t\"rolOpciones\":[{\r\n\r\n\t\"idOpcion\":1},\r\n {\r\n\t\"idOpcion\":2},{\r\n\r\n\"idOpcion\":3},{\r\n\"idOpcion\":4}\r\n\r\n]\r\n\t\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -315,7 +315,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8182/api/rolsp1/editar/67",
+							"raw": "http://localhost:8182/api/rolsp1/editar/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -325,7 +325,7 @@
 								"api",
 								"rolsp1",
 								"editar",
-								"67"
+								"1"
 							]
 						}
 					},
@@ -495,7 +495,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\r\n\t\"userName\":\"JuanAlberto1\",\r\n\t\"password\":\"12345678J@\",\r\n\t\"persona\":{\r\n\t\t\r\n\t\t\"idPersona\":1\r\n\t},\r\n\t\"status\":\"Activo\",\r\n\t\r\n\t\"roles\":[{\r\n\t\t\r\n\t\t\"idRol\":1\r\n\t}]\r\n\t\r\n}",
+							"raw": "{\r\n\t\r\n\t\"userName\":\"JuanAlberto1\",\r\n\t\"password\":\"12345678nJ@\",\r\n\t\"persona\":{\r\n\t\t\r\n\t\t\"idPersona\":1\r\n\t},\r\n\t\"status\":\"Activo\",\r\n\t\r\n\t\"roles\":[{\r\n\t\t\r\n\t\t\"idRol\":1\r\n\t}]\r\n\t\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -525,7 +525,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\r\n\t\"userName\":\"JuanAlberto11\",\r\n\t\"password\":\"12345678J@1\",\r\n\t\"persona\":{\r\n\t\t\r\n\t\t\"idPersona\":1\r\n\t},\r\n\t\"status\":\"Activo\",\r\n\t\r\n\t\"roles\":[{\r\n\t\t\r\n\t\t\"idRol\":1\r\n\t}]\r\n\t\r\n}",
+							"raw": "{\r\n\t\r\n\t\"userName\":\"JuanAlberto1\",\r\n\t\"password\":\"12345678eJ@\",\r\n\t\"persona\":{\r\n\t\t\r\n\t\t\"idPersona\":1\r\n\t},\r\n\t\"status\":\"Activo\",\r\n\t\r\n\t\"roles\":[{\r\n\t\t\r\n\t\t\"idRol\":1\r\n\t}]\r\n\t\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

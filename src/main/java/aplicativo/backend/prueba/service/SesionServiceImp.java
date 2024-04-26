@@ -121,6 +121,7 @@ public class SesionServiceImp implements  SesionService{
             
             usuarioRepository.save(usuarioDb);
             response.setMessage("Sesión cerrada  corretamente.");
+            response.setCode("201");
 			 
 			 }else {
 				 

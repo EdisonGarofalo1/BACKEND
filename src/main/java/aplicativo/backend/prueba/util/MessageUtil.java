@@ -22,7 +22,7 @@ public enum MessageUtil {
 	
 	INGRESENOMBRE("Por favor ingrese su nombre.", 400),
 	
-	JSONSCHEMA("No se pudo leer el formato JsonSchema.", 409),
+	JSONSCHEMA("Invalid JSON data.", 409),
 	;
 	
 	private String key;

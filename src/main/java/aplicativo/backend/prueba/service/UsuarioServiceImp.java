@@ -9,12 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchema;
+
 import aplicativo.backend.prueba.model.entities.Persona;
 import aplicativo.backend.prueba.model.entities.Usuario;
 import aplicativo.backend.prueba.repository.PersonaRepository;
 import aplicativo.backend.prueba.repository.UsuarioRepository;
 import aplicativo.backend.prueba.response.ResponseData;
 import aplicativo.backend.prueba.util.GenerarCorreo;
+import aplicativo.backend.prueba.util.JsonSchemaLoader;
 import aplicativo.backend.prueba.util.MessageUtil;
 
 @Service
@@ -25,6 +30,17 @@ public class UsuarioServiceImp implements UsuarioService {
 
 	@Autowired
 	private PersonaRepository personaRepository;
+	
+	
+	private final JsonSchema userSchema;
+	   private final ObjectMapper objectMapper;
+	   
+	   @Autowired
+	   public UsuarioServiceImp(ObjectMapper objectMapper) throws Exception {
+	       this.userSchema = JsonSchemaLoader.loadSchemaFromInputStream(getClass().getResourceAsStream("/json/usuario-schema.json"));
+	       this.objectMapper = objectMapper;
+	   }
+
 
 	@Override
 	public ResponseData findAll() {
@@ -91,12 +107,18 @@ public class UsuarioServiceImp implements UsuarioService {
 		ResponseData response = new ResponseData();
 
 		try {
+			
+			   String json = objectMapper.writeValueAsString(usuario);
+		        ProcessingReport report = userSchema.validate(objectMapper.readTree(json));
+		        
+		        if (report.isSuccess()) {
+		        	
+		        	
 
-			Optional<Persona> personaOptional = personaRepository.findById(usuario.getPersona().getIdPersona());
-
-			Usuario usuarioDb = usuarioRepository.findByUsernameOrEmail(usuario.getUserName(), usuario.getMail());
-
+		
 			if (id != null) {
+				
+				// Actualizar
 				Usuario DbUsuario = usuarioRepository.findById(id).orElse(null);
 
 				if (DbUsuario != null) {
@@ -120,13 +142,26 @@ public class UsuarioServiceImp implements UsuarioService {
 
 				}
 
-			} else {
+			}
+			
+			
+			
+			else {
+				
+				// Crear
+				
+				Optional<Persona> personaOptional = personaRepository.findById(usuario.getPersona().getIdPersona());
+
+				Usuario usuarioDb = usuarioRepository.findByUsernameOrEmail(usuario.getUserName(), usuario.getMail());
+
 
 				if (usuarioDb != null && usuario.getIdUsuario() == null) {
 
 					response.setCode(MessageUtil.MODULOEXIST.name());
 					response.setMessage(MessageUtil.MODULOEXIST.getKey());
-				}
+					
+					return response;
+				} 
 				if (personaOptional.isPresent()) {
 					Persona persona = personaOptional.get();
 					String correo = GenerarCorreo.generateEmail(persona.getNombres(), persona.getApellidos(),
@@ -152,6 +187,11 @@ public class UsuarioServiceImp implements UsuarioService {
 					response.setMessage(MessageUtil.NOTFOUND.getKey());
 				}
 
+			}}else {
+				
+				
+				response.setCode(MessageUtil.JSONSCHEMA.name());
+				response.setMessage(MessageUtil.JSONSCHEMA.getKey() + report.toString());
 			}
 
 		} catch (Exception e) {

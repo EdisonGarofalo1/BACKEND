@@ -4,21 +4,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+
+
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchema;
 
 import aplicativo.backend.prueba.model.entities.Persona;
 
 import aplicativo.backend.prueba.repository.PersonaRepository;
 import aplicativo.backend.prueba.response.ResponseData;
+import aplicativo.backend.prueba.util.JsonSchemaLoader;
 import aplicativo.backend.prueba.util.MessageUtil;
+
+
+
 
 @Service
 public class PersonaServiceImp implements PersonaService {
 
 	@Autowired
 	private PersonaRepository personaRepository;
+	 
+	private final JsonSchema userSchema;
+   private final ObjectMapper objectMapper;
+   
+   @Autowired
+   public PersonaServiceImp(ObjectMapper objectMapper) throws Exception {
+       this.userSchema = JsonSchemaLoader.loadSchemaFromInputStream(getClass().getResourceAsStream("/json/persona-schema.json"));
+       this.objectMapper = objectMapper;
+   }
 
 	@Override
 	public ResponseData findAll() {
@@ -55,11 +77,10 @@ public class PersonaServiceImp implements PersonaService {
 		Map<String, Object> mapPersonas = new HashMap<>();
 		try {
 
-			// Optional<Persona> optionalPersona =personaRepository.findById(id);
 			Persona persona = personaRepository.findById(id).orElse(null);
-			// if (optionalPersona.isPresent()) {
+		
 			if (persona != null) {
-				// Persona persona = optionalPersona.get();
+			
 				mapPersonas.put("persona", persona);
 				response.setData(mapPersonas);
 
@@ -80,11 +101,17 @@ public class PersonaServiceImp implements PersonaService {
 	}
 
 	@Override
-	public ResponseData save(Persona persona, Integer id) {
+	public ResponseData save( Persona persona, Integer id) {
 
-		ResponseData response = new ResponseData();
+		ResponseData response = new ResponseData();	 
+	        
 		try {
 
+			   String json = objectMapper.writeValueAsString(persona);
+		        ProcessingReport report = userSchema.validate(objectMapper.readTree(json));
+		        
+		        if (report.isSuccess()) {
+			
 			if (id != null) {
 				Persona personaresponse = personaRepository.findById(id).orElse(null);
 
@@ -111,10 +138,16 @@ public class PersonaServiceImp implements PersonaService {
 				response.setMessage(MessageUtil.CREATED.getKey());
 
 			}
+			
+		        } else {
+		        	response.setCode(MessageUtil.JSONSCHEMA.name());
+					response.setMessage(MessageUtil.JSONSCHEMA.getKey() + report.toString());
 
+		         
+		        }
 		} catch (Exception e) {
 			response.setCode(MessageUtil.INTERNALERROR.name());
-			response.setMessage(MessageUtil.INTERNALERROR.getKey() + e.getMessage());
+			response.setMessage(MessageUtil.INTERNALERROR.getKey() + "\n" + e.getMessage());
 
 		}
 
