@@ -120,11 +120,16 @@ public class SesionServiceImp implements  SesionService{
 	        usuarioDb.setSessionActive("E");
             
             usuarioRepository.save(usuarioDb);
+            response.setMessage("Sesión cerrada  corretamente.");
+			 
+			 }else {
+				 
+				  response.setMessage("Usuario no encontrado.");
+				 
 			 }
 			 
 		
-			 response.setMessage("Sesión cerrada  corretamente.");
-			 
+			
 			
 	   
 	        
